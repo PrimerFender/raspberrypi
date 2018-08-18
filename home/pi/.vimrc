@@ -1,1 +1,1 @@
-/home/pi/.vimrc
+set nocompatible
