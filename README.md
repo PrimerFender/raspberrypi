@@ -34,11 +34,22 @@ sudo systemctl restart smbd
 
 [Pi-Hole](https://pi-hole.net/)
 
-## TFTP Server
 ### Cisco Backups
 
 //TODO
 
 ## Static IP Address
 
-//TODO
+[Reference Instructions](https://www.abelectronics.co.uk/kb/article/31/raspbian-jessie-or-stretch-static-ip-setup)
+
+### Configuration Summary
+
+```bash
+ip addr
+# Note IP address, default gateway
+sudo vi /etc/dhcpcd.conf
+# Append to end of file
+interface eth0
+static ip_address=192.168.1.3/24
+static routers=192.168.1.1
+```
