@@ -33,3 +33,12 @@ sudo systemctl restart smbd
 //TODO
 
 [Pi-Hole](https://pi-hole.net/)
+
+## TFTP Server
+### Cisco Backups
+
+//TODO
+
+## Static IP Address
+
+//TODO
