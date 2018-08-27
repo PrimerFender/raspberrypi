@@ -1,8 +1,8 @@
 
 !
-! Last configuration change at 17:46:20 PST Sun Aug 26 2018 by cisco
-! NVRAM config last updated at 17:46:31 PST Sun Aug 26 2018 by cisco
-! NVRAM config last updated at 17:46:31 PST Sun Aug 26 2018 by cisco
+! Last configuration change at 17:49:00 PST Sun Aug 26 2018 by cisco
+! NVRAM config last updated at 17:49:14 PST Sun Aug 26 2018 by cisco
+! NVRAM config last updated at 17:49:14 PST Sun Aug 26 2018 by cisco
 version 15.2
 no service pad
 service timestamps debug datetime msec
@@ -144,5 +144,5 @@ line vty 0 4
  length 0
  transport input all
 !
-sntp server 66.228.54.198
+sntp server 132.163.96.1
 end
