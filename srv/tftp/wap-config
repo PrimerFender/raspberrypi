@@ -1,8 +1,8 @@
 
 !
-! Last configuration change at 17:49:00 PST Sun Aug 26 2018 by cisco
-! NVRAM config last updated at 17:49:14 PST Sun Aug 26 2018 by cisco
-! NVRAM config last updated at 17:49:14 PST Sun Aug 26 2018 by cisco
+! Last configuration change at 17:51:42 PDT Sun Aug 26 2018 by cisco
+! NVRAM config last updated at 17:51:52 PDT Sun Aug 26 2018 by cisco
+! NVRAM config last updated at 17:51:52 PDT Sun Aug 26 2018 by cisco
 version 15.2
 no service pad
 service timestamps debug datetime msec
@@ -15,7 +15,8 @@ logging rate-limit console 9
 enable secret 5 $1$q6Ar$8m9JrwH0Q.r60/h8cMrHW.
 !
 no aaa new-model
-clock timezone PST -7 0
+clock timezone PST -8 0
+clock summer-time PDT recurring
 ip domain name local
 ip name-server 1.1.1.1
 ip name-server 8.8.8.8
