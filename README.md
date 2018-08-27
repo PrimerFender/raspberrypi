@@ -7,7 +7,7 @@ This is a git repo that backs up my Raspberry Pi configuration.
 1. Clone the repo to `~/config-backup/raspberrypi/`
 1. Setup hard links for the config files mirroring the filesystem stored in the repo
 
-`sudo ln /etc/dhcpcd.conf ~/config-backup/respberrypi/etc/dhcpcd.conf`
+`sudo ln /etc/dhcpcd.conf ~/config-backup/raspberrypi/etc/dhcpcd.conf`
 
 1. //TODO Refine this process because it works for backup but not restore
 
@@ -108,7 +108,6 @@ sudo systemctl restart smbd
 //TODO
 
 [Pi-Hole](https://pi-hole.net/)
-
 
 ### Inbound/Outbound Traffic Analyzer for Router
 
