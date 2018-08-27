@@ -2,6 +2,15 @@
 
 This is a git repo that backs up my Raspberry Pi configuration.
 
+## Backup Instructions
+
+1. Clone the repo to `~/config-backup/raspberrypi/`
+1. Setup hard links for the config files mirroring the filesystem stored in the repo
+
+`sudo ln /etc/dhcpcd.conf ~/config-backup/respberrypi/etc/dhcpcd.conf`
+
+1. //TODO Refine this process because it works for backup but not restore
+
 ## Shared Network Printer
 
 // Completed 2018-08-18
@@ -33,3 +42,27 @@ sudo systemctl restart smbd
 //TODO
 
 [Pi-Hole](https://pi-hole.net/)
+
+### Cisco Backups
+
+//TODO
+
+## Static IP Address
+
+[Reference Instructions](https://www.abelectronics.co.uk/kb/article/31/raspbian-jessie-or-stretch-static-ip-setup)
+
+### Configuration Summary
+
+```bash
+ip addr
+# Note IP address, default gateway
+sudo vi /etc/dhcpcd.conf
+# Append to end of file
+interface eth0
+static ip_address=192.168.1.3/24
+static routers=192.168.1.1
+```
+
+### Inbound/Outbound Traffic Analyzer for Router
+
+//TODO
