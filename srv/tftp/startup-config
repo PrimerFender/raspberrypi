@@ -1,9 +1,9 @@
 : Saved
-: Written by enable_15 at 18:09:50.115 PDT Sun Aug 26 2018
+: Written by enable_15 at 18:38:04.219 PDT Sun Aug 26 2018
 !
 ASA Version 8.2(5) 
 !
-hostname ciscoasa
+hostname router
 enable password 2KFQnbNIdI.2KYOU encrypted
 passwd 2KFQnbNIdI.2KYOU encrypted
 names
@@ -92,6 +92,7 @@ threat-detection basic-threat
 threat-detection statistics access-list
 no threat-detection statistics tcp-intercept
 ntp server 132.163.96.1 source outside
+tftp-server inside 192.168.1.3 startup-config
 webvpn
 username asa password ekC6kDUTORnzHAhd encrypted
 !
@@ -125,5 +126,5 @@ policy-map global_policy
 service-policy global_policy global
 prompt hostname context 
 no call-home reporting anonymous
-Cryptochecksum:781a329ae8259d998f47a4769c3ca2fb
+Cryptochecksum:7e837f89873af318d70c1ea4bb9c769c
 : end
