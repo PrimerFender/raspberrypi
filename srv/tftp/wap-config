@@ -1,0 +1,164 @@
+
+!
+! No configuration change since last restart
+version 15.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname wap
+!
+logging rate-limit console 9
+enable secret 5 $1$q6Ar$8m9JrwH0Q.r60/h8cMrHW.
+!
+no aaa new-model
+clock timezone PST -7 0
+ip domain name local
+ip name-server 8.8.8.8
+!
+!
+dot11 syslog
+dot11 vlan-name inside vlan 1
+!
+dot11 ssid Internets
+   vlan 1
+   authentication open 
+   authentication key-management wpa version 2
+   guest-mode
+   wpa-psk ascii 7 020401551F0A0A3858460C1A0403
+!
+crypto pki token default removal timeout 0
+!
+crypto pki trustpoint TP-self-signed-68181880
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-68181880
+ revocation-check none
+ rsakeypair TP-self-signed-68181880
+!
+!
+crypto pki certificate chain TP-self-signed-68181880
+ certificate self-signed 01
+  30820227 30820190 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  2F312D30 2B060355 04031324 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 36383138 31383830 301E170D 39333033 30313032 35313339 
+  5A170D32 30303130 31303030 3030305A 302F312D 302B0603 55040313 24494F53 
+  2D53656C 662D5369 676E6564 2D436572 74696669 63617465 2D363831 38313838 
+  3030819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 8100B688 
+  F7823A2B 9120CE93 76DC8EFC 62CE7F0C D80E3CB7 504AD255 34D653D7 D63198CF 
+  7273916F 161ABF61 73E1EF47 963DABF1 1A3DB2BF 25A32C9F 0C9E84C9 1BA85D29 
+  92E9B21A 59EC917F 1EE0AAB7 A5F9856B 2B82E1D3 9FD0657B FFA7BF97 172188D4 
+  2248ED6D EE92BB0E D5E0CCB5 6EFF7E50 2110A5BB 405BCB8E D9124EB5 27110203 
+  010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603 551D2304 
+  18301680 14ADACBC 47ECD67A D620B671 2A2E1B25 D9B2EEC9 C5301D06 03551D0E 
+  04160414 ADACBC47 ECD67AD6 20B6712A 2E1B25D9 B2EEC9C5 300D0609 2A864886 
+  F70D0101 05050003 81810084 28C58E3E 433AD6D2 8D001EB3 D65BDA09 CC80329A 
+  446B79F2 A36ADF81 7D67A194 042EAC76 36049184 9AC57B96 C5AD0DF8 D2B23E87 
+  12040845 21D2616E 14B79842 4D90BFE3 E3F4C79E 8A099019 313DD9F4 D29E0BB8 
+  6C78CFC3 C05A6783 22783C8E EB8801EF FCCD7D71 930C8D8A 4D13C685 4BB4BE88 
+  50B3F8C2 6D822C0C 3CB523
+  	quit
+username Cisco password 7 0802455D0A16
+!
+!
+bridge irb
+!
+!
+interface Dot11Radio0
+ no ip address
+ no ip route-cache
+ !
+ encryption vlan 1 mode ciphers aes-ccm 
+ !
+ ssid Internets
+ !
+ antenna gain 128
+ speed  basic-1.0 basic-2.0 basic-5.5 basic-11.0 basic-6.0 basic-9.0 basic-12.0 basic-18.0 basic-24.0 basic-36.0 basic-48.0 basic-54.0 m0. m1. m2. m3. m4. m5. m6. m7. m8. m9. m10. m11. m12. m13. m14. m15.
+ power client 20
+ station-role root
+ dot11 qos class video local
+    admission-control
+    admit-traffic signaling infinite
+ !
+ dot11 qos class video cell
+    admission-control
+ !
+!
+interface Dot11Radio0.1
+ encapsulation dot1Q 1 native
+ no ip route-cache
+ bridge-group 1
+ bridge-group 1 subscriber-loop-control
+ bridge-group 1 spanning-disabled
+ bridge-group 1 block-unknown-source
+ no bridge-group 1 source-learning
+ no bridge-group 1 unicast-flooding
+!
+interface Dot11Radio1
+ no ip address
+ no ip route-cache
+ !
+ encryption vlan 1 mode ciphers aes-ccm 
+ !
+ ssid Internets
+ !
+ antenna gain 0
+ no dfs band block
+ speed  basic-6.0 basic-9.0 basic-12.0 basic-18.0 basic-24.0 basic-36.0 basic-48.0 basic-54.0 m0. m1. m2. m3. m4. m5. m6. m7. m8. m9. m10. m11. m12. m13. m14. m15.
+ channel width 40-above
+ channel dfs
+ station-role root
+ dot11 qos class video local
+    admission-control
+    admit-traffic signaling infinite
+ !
+ dot11 qos class video cell
+    admission-control
+ !
+!
+interface Dot11Radio1.1
+ encapsulation dot1Q 1 native
+ no ip route-cache
+ bridge-group 1
+ bridge-group 1 subscriber-loop-control
+ bridge-group 1 spanning-disabled
+ bridge-group 1 block-unknown-source
+ no bridge-group 1 source-learning
+ no bridge-group 1 unicast-flooding
+!
+interface GigabitEthernet0
+ no ip address
+ no ip route-cache
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0.1
+ encapsulation dot1Q 1 native
+ no ip route-cache
+ bridge-group 1
+ bridge-group 1 spanning-disabled
+ no bridge-group 1 source-learning
+!
+interface BVI1
+ ip address 192.168.1.2 255.255.255.0
+ no ip route-cache
+!
+ip default-gateway 192.168.1.1
+no ip http server
+ip http secure-server
+ip http help-path http://www.cisco.com/warp/public/779/smbiz/prodconfig/help/eag
+bridge 1 route ip
+!
+!
+banner motd 
+Welcome to WAP. Please enter secret passcode.
+
+!
+line con 0
+line vty 0 4
+ login local
+ length 0
+ transport input all
+!
+sntp server 66.228.54.198
+end
