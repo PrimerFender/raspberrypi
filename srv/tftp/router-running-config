@@ -1,0 +1,129 @@
+: Saved
+: Written by enable_15 at 17:26:45.996 PDT Sun Aug 26 2018
+!
+ASA Version 8.2(5) 
+!
+hostname ciscoasa
+enable password 2KFQnbNIdI.2KYOU encrypted
+passwd 2KFQnbNIdI.2KYOU encrypted
+names
+!
+interface Ethernet0/0
+ description WAN
+ switchport access vlan 2
+!
+interface Ethernet0/1
+ description WIRELESS ACCESS POINT
+!
+interface Ethernet0/2
+ description APPLE TV
+!
+interface Ethernet0/3
+ description DESKTOP-PC
+!
+interface Ethernet0/4
+!
+interface Ethernet0/5
+!
+interface Ethernet0/6
+!
+interface Ethernet0/7
+!
+interface Vlan1
+ nameif inside
+ security-level 100
+ ip address 192.168.1.1 255.255.255.0 
+!
+interface Vlan2
+ nameif outside
+ security-level 0
+ ip address dhcp setroute 
+!
+ftp mode passive
+clock timezone PST -8
+clock summer-time PDT recurring
+dns domain-lookup outside
+dns server-group DefaultDNS
+ name-server 1.1.1.1
+ name-server 8.8.8.8
+access-list outside2inside extended permit icmp any any 
+pager lines 24
+logging timestamp
+mtu inside 1500
+mtu outside 1500
+icmp unreachable rate-limit 1 burst-size 1
+no asdm history enable
+arp timeout 14400
+global (outside) 1 interface
+nat (inside) 1 192.168.1.0 255.255.255.0
+access-group outside2inside in interface outside
+timeout xlate 3:00:00
+timeout conn 1:00:00 half-closed 0:10:00 udp 0:02:00 icmp 0:00:02
+timeout sunrpc 0:10:00 h323 0:05:00 h225 1:00:00 mgcp 0:05:00 mgcp-pat 0:05:00
+timeout sip 0:30:00 sip_media 0:02:00 sip-invite 0:03:00 sip-disconnect 0:02:00
+timeout sip-provisional-media 0:02:00 uauth 0:05:00 absolute
+timeout tcp-proxy-reassembly 0:01:00
+timeout floating-conn 0:00:00
+dynamic-access-policy-record DfltAccessPolicy
+http server enable
+http 192.168.1.0 255.255.255.0 inside
+snmp-server host inside 192.168.1.196 poll community public version 2c
+snmp-server location Living Room
+snmp-server contact Sparky
+snmp-server community public
+crypto ipsec security-association lifetime seconds 28800
+crypto ipsec security-association lifetime kilobytes 4608000
+telnet timeout 5
+ssh 0.0.0.0 0.0.0.0 inside
+ssh 0.0.0.0 0.0.0.0 outside
+ssh timeout 15
+ssh version 2
+console timeout 0
+dhcp-client client-id interface outside
+dhcpd dns 1.1.1.1 8.8.8.8
+dhcpd domain local
+dhcpd auto_config outside
+!
+dhcpd address 192.168.1.5-192.168.1.254 inside
+dhcpd enable inside
+!
+
+threat-detection basic-threat
+threat-detection statistics access-list
+no threat-detection statistics tcp-intercept
+ntp server 132.163.96.1 source outside
+webvpn
+username asa password ekC6kDUTORnzHAhd encrypted
+!
+class-map inspection_default
+ match default-inspection-traffic
+!
+!
+policy-map type inspect dns preset_dns_map
+ parameters
+  message-length maximum client auto
+  message-length maximum 512
+policy-map global_policy
+ class inspection_default
+  inspect dns preset_dns_map 
+  inspect ftp 
+  inspect h323 h225 
+  inspect h323 ras 
+  inspect rsh 
+  inspect rtsp 
+  inspect esmtp 
+  inspect sqlnet 
+  inspect skinny  
+  inspect sunrpc 
+  inspect xdmcp 
+  inspect sip  
+  inspect netbios 
+  inspect tftp 
+  inspect ip-options 
+  inspect icmp 
+!
+service-policy global_policy global
+prompt hostname context 
+no call-home reporting anonymous
+Cryptochecksum:781a329ae8259d998f47a4769c3ca2fb
+: end
