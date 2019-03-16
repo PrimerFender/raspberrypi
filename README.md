@@ -4,10 +4,13 @@ This is a git repo that backs up my Raspberry Pi configuration.
 
 ## Backup Instructions
 
-1. Clone the repo to `~/config-backup/raspberrypi/`
-1. Setup hard links for the config files mirroring the filesystem stored in the repo
+1. Clone the repo to `~/GitHub/PrimerFender/raspberrypi/`
+1. Execute backup scripts
 
-`sudo ln /etc/dhcpcd.conf ~/config-backup/raspberrypi/etc/dhcpcd.conf`
+```bash
+cd ~/GitHub/PrimerFender/raspberrypi/scripts/
+./backup-pi.sh
+```
 
 1. //TODO Refine this process because it works for backup but not restore
 
