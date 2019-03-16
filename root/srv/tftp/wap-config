@@ -1,0 +1,149 @@
+
+!
+! Last configuration change at 17:55:15 PDT Sun Aug 26 2018 by cisco
+! NVRAM config last updated at 18:07:41 PDT Sun Aug 26 2018 by cisco
+! NVRAM config last updated at 18:07:41 PDT Sun Aug 26 2018 by cisco
+version 15.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname wap
+!
+logging rate-limit console 9
+enable secret 5 $1$q6Ar$8m9JrwH0Q.r60/h8cMrHW.
+!
+no aaa new-model
+clock timezone PST -8 0
+clock summer-time PDT recurring
+ip domain name local
+ip name-server 1.1.1.1
+ip name-server 8.8.8.8
+!
+!
+dot11 syslog
+dot11 vlan-name inside vlan 1
+!
+dot11 ssid Internets
+   vlan 1
+   authentication open 
+   authentication key-management wpa version 2
+   guest-mode
+   wpa-psk ascii 7 020401551F0A0A3858460C1A0403
+!
+crypto pki token default removal timeout 0
+!
+crypto pki trustpoint TP-self-signed-68181880
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-68181880
+ revocation-check none
+ rsakeypair TP-self-signed-68181880
+!
+!
+crypto pki certificate chain TP-self-signed-68181880
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+username Cisco password 7 0802455D0A16
+!
+!
+bridge irb
+!
+!
+interface Dot11Radio0
+ no ip address
+ no ip route-cache
+ !
+ encryption vlan 1 mode ciphers aes-ccm 
+ !
+ ssid Internets
+ !
+ antenna gain 128
+ speed  basic-1.0 basic-2.0 basic-5.5 basic-11.0 basic-6.0 basic-9.0 basic-12.0 basic-18.0 basic-24.0 basic-36.0 basic-48.0 basic-54.0 m0. m1. m2. m3. m4. m5. m6. m7. m8. m9. m10. m11. m12. m13. m14. m15.
+ power client 20
+ station-role root
+ dot11 qos class video local
+    admission-control
+    admit-traffic signaling infinite
+ !
+ dot11 qos class video cell
+    admission-control
+ !
+!
+interface Dot11Radio0.1
+ encapsulation dot1Q 1 native
+ no ip route-cache
+ bridge-group 1
+ bridge-group 1 subscriber-loop-control
+ bridge-group 1 spanning-disabled
+ bridge-group 1 block-unknown-source
+ no bridge-group 1 source-learning
+ no bridge-group 1 unicast-flooding
+!
+interface Dot11Radio1
+ no ip address
+ no ip route-cache
+ !
+ encryption vlan 1 mode ciphers aes-ccm 
+ !
+ ssid Internets
+ !
+ antenna gain 0
+ no dfs band block
+ speed  basic-6.0 basic-9.0 basic-12.0 basic-18.0 basic-24.0 basic-36.0 basic-48.0 basic-54.0 m0. m1. m2. m3. m4. m5. m6. m7. m8. m9. m10. m11. m12. m13. m14. m15.
+ channel width 40-above
+ channel dfs
+ station-role root
+ dot11 qos class video local
+    admission-control
+    admit-traffic signaling infinite
+ !
+ dot11 qos class video cell
+    admission-control
+ !
+!
+interface Dot11Radio1.1
+ encapsulation dot1Q 1 native
+ no ip route-cache
+ bridge-group 1
+ bridge-group 1 subscriber-loop-control
+ bridge-group 1 spanning-disabled
+ bridge-group 1 block-unknown-source
+ no bridge-group 1 source-learning
+ no bridge-group 1 unicast-flooding
+!
+interface GigabitEthernet0
+ no ip address
+ no ip route-cache
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0.1
+ encapsulation dot1Q 1 native
+ no ip route-cache
+ bridge-group 1
+ bridge-group 1 spanning-disabled
+ no bridge-group 1 source-learning
+!
+interface BVI1
+ ip address 192.168.1.2 255.255.255.0
+ no ip route-cache
+!
+ip default-gateway 192.168.1.1
+no ip http server
+ip http secure-server
+ip http help-path http://www.cisco.com/warp/public/779/smbiz/prodconfig/help/eag
+bridge 1 route ip
+!
+!
+banner motd 
+Welcome to WAP. Please enter secret passcode.
+
+!
+line con 0
+line vty 0 4
+ login local
+ length 0
+ transport input all
+!
+sntp server 132.163.96.1
+end
