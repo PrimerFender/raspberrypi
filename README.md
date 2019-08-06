@@ -100,6 +100,12 @@ sudo systemctl restart cups
 sudo systemctl restart smbd
 ```
 
+### Install on Windows
+
+- `raspberrypi` wasn't being found automatically in Network browser, added via IPP route\share name
+
+`http://raspberrypi:631/printers/Canon_MX490_series`
+
 ## Shared Network Scanner
 
 //TODO
