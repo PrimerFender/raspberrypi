@@ -72,9 +72,9 @@ Destination filename [wap-confg]? wap-confg
 exit
 # Push backup-files to GitHub
 ssh pi
-ln /srv/tftp/startup-config ~/config-backup/raspberrypi/srv/tftp/startup-config
-ln /srv/tftp/wap-confg ~/config-backup/raspberrypi/srv/tftp/wap-confg
-cd ~/config-backup/raspberrypi/srv/tftp
+ln /srv/tftp/startup-config ~/GitHub/PrimerFender/raspberrypi/root/srv/tftp/startup-config
+ln /srv/tftp/wap-confg ~/GitHub/PrimerFender/raspberrypi/root/srv/tftp/wap-confg
+cd ~/GitHub/PrimerFender/raspberrypi/root/srv/tftp
 git add startup-config wap-confg
 git commit -m "Changes to router or WAP config files..."
 git push
@@ -114,9 +114,25 @@ sudo systemctl restart smbd
 
 ## DHCP/DNS Server
 
-//TODO
-
 [Pi-Hole](https://pi-hole.net/)
+
+```bash
+# Install Pi-Hole
+wget -O basic-install.sh https://install.pi-hole.net
+sudo bash basic-install.sh
+
+# Remove admin password
+pihole -a -p
+
+# Pi-Hole installs lighthttpd, but nginx was already intalled (not sure why), so temporarily disable until finding out for sure
+sudo systemctl stop nginx
+sudo systemctl start lighttpd
+```
+
+```bash
+# Update router config to use pi-hole and Quad9
+
+```
 
 ### Inbound/Outbound Traffic Analyzer for Router
 
